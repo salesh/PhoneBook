@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PhoneBook
 {
-    public partial class Form1 : Form
+    public partial class PhoneBook : Form
     {
-        public Form1()
+        public PhoneBook()
         {
             InitializeComponent();
         }
