@@ -26,8 +26,9 @@ namespace PhoneBook
         }
         private void addBtn_Click(object sender, EventArgs e)
         {
-            checkTextBoxes();   
-            try
+            if (checkTextBoxes() == 0)
+            {
+                try
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(
@@ -35,7 +36,7 @@ namespace PhoneBook
                        VALUES('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "')"
                             , connection);
                     command.ExecuteNonQuery();
-                    MessageBox.Show("Added new contact", "Message", MessageBoxButtons.OK);
+                    MessageBox.Show("Record added successfully", "Message", MessageBoxButtons.OK);
                 }
                 catch (Exception ex)
                 {
@@ -50,60 +51,70 @@ namespace PhoneBook
                     textBox3.Clear();
                 }
             }
+        }
         private void editBtn_Click(object sender, EventArgs e)
         {
-            try
+            if (checkTextBoxes() == 0)
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(
-                    @"UPDATE CONTACTS
-                      SET   name = '" + textBox1.Text + "', mobile = '" + textBox2.Text+"', email  = '" + textBox3.Text +"' WHERE (name = '" + textBox1.Text + "') "
-                    , connection);
-                command.ExecuteNonQuery();
-                MessageBox.Show("Updated!", "Message", MessageBoxButtons.OK);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK);
-            }
-            finally
-            {
-                connection.Close();
-                dataGrid_Display();
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(
+                        @"UPDATE CONTACTS
+                      SET   name = '" + textBox1.Text + "', mobile = '" + textBox2.Text + "', email  = '" + textBox3.Text + "' WHERE (name = '" + textBox1.Text + "') "
+                        , connection);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Record updated successfully!", "Message", MessageBoxButtons.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK);
+                }
+                finally
+                {
+                    connection.Close();
+                    dataGrid_Display();
+                }
             }
         }
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            try
+            if (checkTextBoxes() == 0)
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(
-                    @"DELETE FROM CONTACTS
-                      WHERE name = '"+ textBox1.Text +"'"
-                    , connection);
-                command.ExecuteNonQuery();
-                MessageBox.Show("Deleted!", "Message", MessageBoxButtons.OK);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error",MessageBoxButtons.OK);
-            }
-            finally
-            {
-                connection.Close();
-                dataGrid_Display();
-                textBox1.Clear();
-                textBox2.Clear();
-                textBox3.Clear();
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(
+                        @"DELETE FROM CONTACTS
+                      WHERE name = '" + textBox1.Text + "'"
+                        , connection);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Record deleted successfully!", "Message", MessageBoxButtons.OK);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+                }
+                finally
+                {
+                    connection.Close();
+                    dataGrid_Display();
+                    textBox1.Clear();
+                    textBox2.Clear();
+                    textBox3.Clear();
+                }
             }
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            textBox1.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-            textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-            textBox3.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+            if (e.RowIndex >= 0)
+            {
+                textBox1.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                textBox3.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+            }
         }
-        private void search_TextChanged(object sender, EventArgs e)
+        private void searchBox_TextChanged(object sender, EventArgs e)
         {
             SqlDataAdapter adapter = new SqlDataAdapter(
                 @"SELECT *
@@ -124,7 +135,7 @@ namespace PhoneBook
         }
         private void dataGrid_Display()
         {
-            SqlDataAdapter adapter = new SqlDataAdapter("select * from contacts", connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("select * from contacts order by name asc", connection);
             DataTable datatab = new DataTable();
             adapter.Fill(datatab);
             dataGridView1.Rows.Clear();             //n => 0
@@ -135,12 +146,14 @@ namespace PhoneBook
                 dataGridView1.Rows[n].Cells[1].Value = item[1].ToString();
                 dataGridView1.Rows[n].Cells[2].Value = item[2].ToString();
             }
+            dataGridView1.ClearSelection();
         }
-        private void checkTextBoxes()
+        private int checkTextBoxes()
         {
             if (String.IsNullOrEmpty(textBox1.Text) && String.IsNullOrEmpty(textBox2.Text) && String.IsNullOrEmpty(textBox3.Text))
             {
-                MessageBox.Show("Please insert some data", "Message", MessageBoxButtons.OK);
+                MessageBox.Show("Please insert or pick some data from table", "Message", MessageBoxButtons.OK);
+                return -1;
             }
             else
             {
@@ -155,6 +168,7 @@ namespace PhoneBook
                         textBox1.Text = textBox2.Text;
                     }
                 }
+                return 0;
             }
         }
     }
