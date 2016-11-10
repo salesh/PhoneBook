@@ -14,22 +14,20 @@ namespace PhoneBook
     public partial class PhoneBook : Form
     {
 
-        SqlConnection connection;
-        string connectionString;
-
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings[""].ConnectionString);
+        
         public PhoneBook()
         {
             InitializeComponent();
-            connectionString = ConfigurationManager.ConnectionStrings["PhoneBook.Properties.Settings.Database1ConnectionString"].ConnectionString;
         }
 
         private void add_Click(object sender, EventArgs e)
         {
-            connection = new SqlConnection(connectionString);
+           
             connection.Open();
             SqlCommand command = new SqlCommand(
-                 "INSERT into PHONES " +
-                 "values('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "')", connection);
+                 @"INSERT into PHONES(first,last,mobile)
+                 VALUES('aaaa','aaa','ssss')", connection);
             command.ExecuteNonQuery();
 
             connection.Close();
