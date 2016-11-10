@@ -13,27 +13,33 @@ namespace PhoneBook
 {
     public partial class PhoneBook : Form
     {
-        //SqlConnection connection = new SqlConnection("");
+
+        SqlConnection connection;
+        string connectionString;
+
         public PhoneBook()
         {
             InitializeComponent();
+            connectionString = ConfigurationManager.ConnectionStrings["PhoneBook.Properties.Settings.Database1ConnectionString"].ConnectionString;
         }
 
         private void add_Click(object sender, EventArgs e)
         {
+            connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = new SqlCommand(
-                @"INSERT into Phone (first,last,mobile) 
-                  values('"+textBox1.Text+ "','" + textBox2.Text + "','" + textBox3.Text + "')",connection);
+                 "INSERT into PHONES " +
+                 "values('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "')", connection);
             command.ExecuteNonQuery();
 
             connection.Close();
             //Clear all box after add
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+         
 
-            
+
         }
 
         private void edit_Click(object sender, EventArgs e)
@@ -42,6 +48,11 @@ namespace PhoneBook
         }
 
         private void delete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PhoneBook_Load(object sender, EventArgs e)
         {
 
         }
