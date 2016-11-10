@@ -37,7 +37,7 @@
             this.edit = new System.Windows.Forms.Button();
             this.delete = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.search = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -123,15 +123,17 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(345, 228);
             this.dataGridView1.TabIndex = 9;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // textBox4
+            // search
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(46, 211);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(345, 26);
-            this.textBox4.TabIndex = 6;
-            this.textBox4.Tag = "";
+            this.search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.search.Location = new System.Drawing.Point(46, 211);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(345, 26);
+            this.search.TabIndex = 6;
+            this.search.Tag = "";
+            this.search.TextChanged += new System.EventHandler(this.search_TextChanged);
             // 
             // textBox2
             // 
@@ -161,13 +163,11 @@
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column3.HeaderText = "Mobile";
             this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
             // 
             // Column2
             // 
             this.Column2.HeaderText = "Email";
             this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
             // 
             // PhoneBook
             // 
@@ -176,7 +176,7 @@
             this.ClientSize = new System.Drawing.Size(441, 507);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.search);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.delete);
             this.Controls.Add(this.edit);
@@ -205,12 +205,12 @@
         private System.Windows.Forms.Button edit;
         private System.Windows.Forms.Button delete;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox search;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }
 
