@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PhoneBook.PhoneBook">
+    <Position X="4.75" Y="1" Width="2" />
+    <Members>
+      <Field Name="add" Hidden="true" />
+      <Field Name="Column1" Hidden="true" />
+      <Field Name="Column2" Hidden="true" />
+      <Field Name="Column3" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="dataGridView1" Hidden="true" />
+      <Field Name="delete" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Field Name="edit" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="label1" Hidden="true" />
+      <Field Name="label2" Hidden="true" />
+      <Field Name="label4" Hidden="true" />
+      <Method Name="PhoneBook" Hidden="true" />
+      <Field Name="search" Hidden="true" />
+      <Field Name="textBox1" Hidden="true" />
+      <Field Name="textBox2" Hidden="true" />
+      <Field Name="textBox3" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ACAhAAAAACAEABAAAACBAQBCAgi4QAAEECAAAgACQAA=</HashCode>
+      <FileName>PhoneBook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
