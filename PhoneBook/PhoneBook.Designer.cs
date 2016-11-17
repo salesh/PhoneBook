@@ -33,14 +33,14 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.add = new System.Windows.Forms.Button();
-            this.edit = new System.Windows.Forms.Button();
-            this.delete = new System.Windows.Forms.Button();
+            this.addBtn = new System.Windows.Forms.Button();
+            this.editBtn = new System.Windows.Forms.Button();
+            this.deleteBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.search = new System.Windows.Forms.TextBox();
+            this.searchBox = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -80,35 +80,35 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Email:";
             // 
-            // add
+            // addBtn
             // 
-            this.add.Location = new System.Drawing.Point(46, 151);
-            this.add.Name = "add";
-            this.add.Size = new System.Drawing.Size(104, 39);
-            this.add.TabIndex = 3;
-            this.add.Text = "Add";
-            this.add.UseVisualStyleBackColor = true;
-            this.add.Click += new System.EventHandler(this.addBtn_Click);
+            this.addBtn.Location = new System.Drawing.Point(46, 151);
+            this.addBtn.Name = "addBtn";
+            this.addBtn.Size = new System.Drawing.Size(104, 39);
+            this.addBtn.TabIndex = 3;
+            this.addBtn.Text = "Add";
+            this.addBtn.UseVisualStyleBackColor = true;
+            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
-            // edit
+            // editBtn
             // 
-            this.edit.Location = new System.Drawing.Point(173, 151);
-            this.edit.Name = "edit";
-            this.edit.Size = new System.Drawing.Size(97, 39);
-            this.edit.TabIndex = 4;
-            this.edit.Text = "Edit";
-            this.edit.UseVisualStyleBackColor = true;
-            this.edit.Click += new System.EventHandler(this.editBtn_Click);
+            this.editBtn.Location = new System.Drawing.Point(173, 151);
+            this.editBtn.Name = "editBtn";
+            this.editBtn.Size = new System.Drawing.Size(97, 39);
+            this.editBtn.TabIndex = 4;
+            this.editBtn.Text = "Edit";
+            this.editBtn.UseVisualStyleBackColor = true;
+            this.editBtn.Click += new System.EventHandler(this.editBtn_Click);
             // 
-            // delete
+            // deleteBtn
             // 
-            this.delete.Location = new System.Drawing.Point(290, 151);
-            this.delete.Name = "delete";
-            this.delete.Size = new System.Drawing.Size(100, 39);
-            this.delete.TabIndex = 5;
-            this.delete.Text = "Delete";
-            this.delete.UseVisualStyleBackColor = true;
-            this.delete.Click += new System.EventHandler(this.deleteBtn_Click);
+            this.deleteBtn.Location = new System.Drawing.Point(290, 151);
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(100, 39);
+            this.deleteBtn.TabIndex = 5;
+            this.deleteBtn.Text = "Delete";
+            this.deleteBtn.UseVisualStyleBackColor = true;
+            this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
             // 
             // dataGridView1
             // 
@@ -128,7 +128,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(345, 228);
             this.dataGridView1.TabIndex = 7;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);         
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // Column1
             // 
@@ -151,15 +151,15 @@
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             // 
-            // search
+            // searchBox
             // 
-            this.search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.search.Location = new System.Drawing.Point(46, 211);
-            this.search.Name = "search";
-            this.search.Size = new System.Drawing.Size(345, 26);
-            this.search.TabIndex = 6;
-            this.search.Tag = "";
-            this.search.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
+            this.searchBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.searchBox.Location = new System.Drawing.Point(46, 211);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(345, 26);
+            this.searchBox.TabIndex = 6;
+            this.searchBox.Tag = "";
+            this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
             // 
             // textBox2
             // 
@@ -185,11 +185,11 @@
             this.ClientSize = new System.Drawing.Size(441, 507);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.search);
+            this.Controls.Add(this.searchBox);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.delete);
-            this.Controls.Add(this.edit);
-            this.Controls.Add(this.add);
+            this.Controls.Add(this.deleteBtn);
+            this.Controls.Add(this.editBtn);
+            this.Controls.Add(this.addBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox3);
@@ -212,11 +212,11 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button add;
-        private System.Windows.Forms.Button edit;
-        private System.Windows.Forms.Button delete;
+        private System.Windows.Forms.Button addBtn;
+        private System.Windows.Forms.Button editBtn;
+        private System.Windows.Forms.Button deleteBtn;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox search;
+        private System.Windows.Forms.TextBox searchBox;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;

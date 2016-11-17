@@ -119,7 +119,7 @@ namespace PhoneBook
             SqlDataAdapter adapter = new SqlDataAdapter(
                 @"SELECT *
                   FROM CONTACTS
-                  WHERE name like '"+search.Text+ "%' or mobile like '" + search.Text + "%' or email like '" + search.Text + "%'"
+                  WHERE name like '"+searchBox.Text+ "%' or mobile like '" + searchBox.Text + "%' or email like '" + searchBox.Text + "%'"
                   , connection);
             DataTable datatab = new DataTable();
             adapter.Fill(datatab);
