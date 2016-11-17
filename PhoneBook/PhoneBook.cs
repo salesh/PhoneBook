@@ -11,16 +11,16 @@ using System.Data.SqlClient;
 using System.Configuration;
 namespace PhoneBook
 {
-    public partial class PhoneBook : Form
+    public partial class phoneBook : Form
     {
 
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["PhoneBook.Properties.Settings.PhoneConnectionString"].ConnectionString);
         
-        public PhoneBook()
+        public phoneBook()
         {
             InitializeComponent();
         }
-        private void PhoneBook_Load(object sender, EventArgs e)
+        private void phoneBook_Load(object sender, EventArgs e)
         {
             dataGrid_Display();
         }
@@ -33,7 +33,7 @@ namespace PhoneBook
                     connection.Open();
                     SqlCommand command = new SqlCommand(
                          @"INSERT into CONTACTS(name,mobile,email)
-                       VALUES('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "')"
+                       VALUES('" + nameBox.Text + "','" + mobileBox.Text + "','" + emailBox.Text + "')"
                             , connection);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Record added successfully", "Message", MessageBoxButtons.OK);
@@ -46,22 +46,22 @@ namespace PhoneBook
                 {
                     connection.Close();
                     dataGrid_Display();
-                    textBox1.Clear();
-                    textBox2.Clear();
-                    textBox3.Clear();
+                    nameBox.Clear();
+                    mobileBox.Clear();
+                    emailBox.Clear();
                 }
             }
         }
         private void editBtn_Click(object sender, EventArgs e)
         {
-            if (checkTextBoxes() == 0)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
                 try
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(
                         @"UPDATE CONTACTS
-                      SET   name = '" + textBox1.Text + "', mobile = '" + textBox2.Text + "', email  = '" + textBox3.Text + "' WHERE (name = '" + textBox1.Text + "') "
+                          SET name = '" + nameBox.Text + "', mobile = '" + mobileBox.Text + "', email  = '" + emailBox.Text + "' WHERE (name = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "' and mobile = '" + dataGridView1.SelectedRows[0].Cells[1].Value.ToString() + "' and email = '" + dataGridView1.SelectedRows[0].Cells[2].Value.ToString() + "') "
                         , connection);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Record updated successfully!", "Message", MessageBoxButtons.OK);
@@ -76,17 +76,21 @@ namespace PhoneBook
                     dataGrid_Display();
                 }
             }
+            else
+            {
+                MessageBox.Show("Please insert or pick some data from table", "Message", MessageBoxButtons.OK);
+            }
         }
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            if (checkTextBoxes() == 0)
+            if (dataGridView1.SelectedRows.Count > 0)
             {
                 try
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(
                         @"DELETE FROM CONTACTS
-                      WHERE name = '" + textBox1.Text + "'"
+                      WHERE name = '" + nameBox.Text + "' and mobile = '" + mobileBox.Text + "' and email = '" + emailBox.Text + "'"
                         , connection);
                     command.ExecuteNonQuery();
                     MessageBox.Show("Record deleted successfully!", "Message", MessageBoxButtons.OK);
@@ -99,73 +103,91 @@ namespace PhoneBook
                 {
                     connection.Close();
                     dataGrid_Display();
-                    textBox1.Clear();
-                    textBox2.Clear();
-                    textBox3.Clear();
+                    nameBox.Clear();
+                    mobileBox.Clear();
+                    emailBox.Clear();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please insert or pick some data from table", "Message", MessageBoxButtons.OK);
             }
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                textBox1.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
-                textBox3.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+                nameBox.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                mobileBox.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                emailBox.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
             }
         }
         private void searchBox_TextChanged(object sender, EventArgs e)
         {
-            SqlDataAdapter adapter = new SqlDataAdapter(
-                @"SELECT *
-                  FROM CONTACTS
-                  WHERE name like '"+searchBox.Text+ "%' or mobile like '" + searchBox.Text + "%' or email like '" + searchBox.Text + "%'"
-                  , connection);
-            DataTable datatab = new DataTable();
-            adapter.Fill(datatab);
-            dataGridView1.Rows.Clear();
-            foreach (DataRow item in datatab.Rows)
+            try
             {
-                int n = dataGridView1.Rows.Add();
-                dataGridView1.Rows[n].Cells[0].Value = item[0].ToString();
-                dataGridView1.Rows[n].Cells[1].Value = item[1].ToString();
-                dataGridView1.Rows[n].Cells[2].Value = item[2].ToString();
+                SqlDataAdapter adapter = new SqlDataAdapter(
+                    @"SELECT *
+                  FROM CONTACTS
+                  WHERE name like '" + searchBox.Text + "%' or mobile like '" + searchBox.Text + "%' or email like '" + searchBox.Text + "%'"
+                      , connection);
+                DataTable datatab = new DataTable();
+                adapter.Fill(datatab);
+                dataGridView1.Rows.Clear();
+                foreach (DataRow item in datatab.Rows)
+                {
+                    int n = dataGridView1.Rows.Add();
+                    dataGridView1.Rows[n].Cells[0].Value = item[0].ToString();
+                    dataGridView1.Rows[n].Cells[1].Value = item[1].ToString();
+                    dataGridView1.Rows[n].Cells[2].Value = item[2].ToString();
+                }
+                dataGridView1.ClearSelection();
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
         }
         private void dataGrid_Display()
         {
-            SqlDataAdapter adapter = new SqlDataAdapter("select * from contacts order by name asc", connection);
-            DataTable datatab = new DataTable();
-            adapter.Fill(datatab);
-            dataGridView1.Rows.Clear();             //n => 0
-            foreach (DataRow item in datatab.Rows)
+            try
             {
-                int n = dataGridView1.Rows.Add();   //n++
-                dataGridView1.Rows[n].Cells[0].Value = item[0].ToString();
-                dataGridView1.Rows[n].Cells[1].Value = item[1].ToString();
-                dataGridView1.Rows[n].Cells[2].Value = item[2].ToString();
+                SqlDataAdapter adapter = new SqlDataAdapter("select * from contacts order by name asc", connection);
+                DataTable datatab = new DataTable();
+                adapter.Fill(datatab);
+                dataGridView1.Rows.Clear();             //n => 0
+                foreach (DataRow item in datatab.Rows)
+                {
+                    int n = dataGridView1.Rows.Add();   //n++
+                    dataGridView1.Rows[n].Cells[0].Value = item[0].ToString();
+                    dataGridView1.Rows[n].Cells[1].Value = item[1].ToString();
+                    dataGridView1.Rows[n].Cells[2].Value = item[2].ToString();
+                }
+                dataGridView1.ClearSelection();
             }
-            dataGridView1.ClearSelection();
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
         }
         private int checkTextBoxes()
         {
-            if (String.IsNullOrEmpty(textBox1.Text) && String.IsNullOrEmpty(textBox2.Text) && String.IsNullOrEmpty(textBox3.Text))
+            if (String.IsNullOrEmpty(nameBox.Text) && String.IsNullOrEmpty(mobileBox.Text) && String.IsNullOrEmpty(emailBox.Text))
             {
                 MessageBox.Show("Please insert or pick some data from table", "Message", MessageBoxButtons.OK);
                 return -1;
             }
             else
             {
-                if (String.IsNullOrEmpty(textBox1.Text))
+                if (String.IsNullOrEmpty(nameBox.Text))
                 {
-                    if (String.IsNullOrEmpty(textBox2.Text))
+                    if (String.IsNullOrEmpty(mobileBox.Text))
                     {
-                        textBox1.Text = textBox3.Text;
+                        nameBox.Text = emailBox.Text;
                     }
                     else
                     {
-                        textBox1.Text = textBox2.Text;
+                        nameBox.Text = mobileBox.Text;
                     }
                 }
                 return 0;
