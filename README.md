@@ -1,2 +1,3 @@
 # PhoneBook
-Simple phone book
+Simple phone book 
+Spec: C#, t-sql and local database.
